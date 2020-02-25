@@ -1,0 +1,36 @@
+{% extends "base_bootstrap.html" %}
+{% load static %} 
+{% block content %}
+	<header class="general">
+	<div class="nav" id = "nav">
+	  <nav>
+	    <ul>
+	      <li><a href="{% url 'index' %}">Back</a></li>
+	      <li><a href="{% url 'login' %}">Log in</a></li>
+	    </ul>
+	  </nav>
+	</div>
+	<div class = "typewriter">
+	<h1>Please sign up to continue.</h1></div>
+	<p>After logging in, you can place orders and make reservations.</p>
+
+	</header>
+
+	<div class = "login" id = "main">
+	
+	<form method="post" >
+	{% csrf_token %}
+	{{ form.as_p }}
+
+	<input type="submit" class="btn btn-primary" value="Sign up" />
+
+	<input type="hidden" name="next" value="{{ next }}" />
+
+	</form>
+	</div>
+
+
+
+
+
+{% endblock %}

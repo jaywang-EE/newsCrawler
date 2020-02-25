@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/html5reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pro_style.css' %}">
+    <title>Evergreen Restaurant.</title>
+  </head>
+  <body>
+    <div class="skip"><a href="#main">Skip to Main Content</a></div>
+    <div class="container">
+
+      <header class = "homePage">
+        <div class="nav">
+          <nav>
+            <ul>
+              <li><a href="#main">About</a></li>
+              <li><a href="#gallery">Gallery</a></li>
+              <li><a href="#menu">Menu</a></li>
+              <li><a href="#order">Order</a></li>
+              <li><a href="#reservation">Reservation</a></li>
+              {% if user.is_authenticated %}
+              {% if is_staff %}
+              <li><a href="{% url 'manage' %}">Manage</a></li>
+              {% endif %}
+              <li><a href="{% url 'logout' %}?next={% url 'index' %}">Logout</a></li>
+              {% else %}
+              <a href="{% url 'login' %}?next={% url 'index' %}">Login</a>
+              {% endif %}
+
+            </ul>
+          </nav>
+      </div>
+      <div class = "cover" id="main">
+        <img src="{% static 'images/logo.png' %}" alt="Evergreen logo"/>
+      </div>
+      <div class = "typewriter">
+      <h1>The right place for the right food!</h1></div>
+      <p>Since 1992, we have consistently served over 3 millions satified customers with delicious, gourmet Chinese cuisine.   Specializing in Mandarin, Sizchuan, Hunan, Shanghai and Taiwan styles of cooking. Evergreen promises only the most authentic flavors with the freshest ingredients, and always at a affordable price.</p>
+      </header>
+      <div class = "mainContent">
+        <div class = "gallery" id = "gallery">
+          <h2>Dishes Gallery</h2>
+          <div class="gcontainer">
+            {% for i, meal in meal_list %}
+            <div class="mySlides">
+              <div class="numbertext">{{i}} / 12</div>
+              <img src="{% static 'images/dishes/'|add:meal.image_url %}" alt="{{meal.name}}">
+            </div>
+            {% endfor %}
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+            <div class="caption-gcontainer">
+              <p id="caption"></p>
+            </div>
+
+            <div class="row" tabindex="0">
+              {% for i, meal in meal_list %}
+              <div class="column">
+                <img class="demo cursor" src="{% static 'images/dishes/'|add:meal.image_url %}" onclick="currentSlide({{i}})" alt="{{meal.name}}">
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <script src ="{% static 'js/gallery.js' %}"></script>
+
+  <!--       menu.   -->
+      <div class = "menu" id = "menu"> 
+        <h2>Menu</h2>
+
+        <div class = "introduce">
+          {% for i, meal in meal_list %}
+          <div class = "card">
+            <h3>{{i}}. {{ meal.name }}   ${{ meal.price }}</h3>
+            <p>{{ meal.introdution }}</p>
+          </div>
+          {% endfor %}
+
+
+        </div>
+      </div>
+
+      <div class = "order" id = "order">
+        <h2>Order</h2>
+        <div class = "orderContent">
+          <div class = "decimg">
+          <img src="{% static 'images/order-1.jpg' %}" alt="decoration">
+          <img src="{% static 'images/order-2.jpg' %}" alt="decoration"></div>
+          <a class = "link" href="/orders"> Order online </a>
+        </div>
+      </div>
+      <div class = "reservation" id = "reservation">
+        <h2>Reservation</h2>
+        <div class = "reContent">
+
+          <div class = "reservationimg">
+          <img src="{% static 'images/reservation.png' %}" alt="decoration"></div>
+          <a class = "link" href="/reserves"> Reservation online </a>
+        </div>
+      </div>
+  </div>
+
+</div>
+
+
+
+
+
+    <footer>
+      <p>
+        &copy; Xin Hu & Chiaming Wang</p>
+
+    </footer>
+  </body>
+</html>

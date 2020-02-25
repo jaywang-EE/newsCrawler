@@ -1,0 +1,1195 @@
+/* Example 26-13: styles.css */
+
+* {
+  font-family:verdana,sans-serif;
+  font-size  :14pt;
+}
+
+body {
+  width     :700px;
+  height    :700px; 
+  margin    :20px auto;
+}
+
+html {
+  background:white;
+}
+
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+li a {
+font-size: 12pt;
+} 
+
+#aboutback {
+  line-height: 26px; 
+  background-image: url('hawaiis.jpg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  /*background-attachment: fixed; image will not scroll*/ 
+  background-size: cover;
+  text-align: center;
+}
+
+@media screen /* iphone se */ /* this is the correct format */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #aboutback {
+  max-height: 540px;} /* 568-28=*/ 
+} 
+
+@media screen /* galaxy s5; perfect order below se; s8 s9 360 x 740 */
+and (min-width : 360px) /* density-independent pixels */
+and (max-width : 640px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #aboutback {
+    max-height: 560px;}
+} 
+
+@media screen /* s8 s9 360 x 740 */
+and (min-width : 360px) 
+and (max-width : 740px)
+and (-webkit-min-device-pixel-ratio: 4)  {
+  #aboutback {
+    max-height: 712px;}
+} 
+
+@media screen /* iphone 6/7/8 */
+and (min-width : 375px) 
+and (max-width : 667px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #aboutback {
+  max-height: none;} /* 667-79=588 */
+} 
+
+@media screen /* iPad */
+and (min-device-width : 768px) { /* device-width is being deprecated */
+  #aboutback {
+    min-height: 945px;} /* 1024 = 79 */
+} 
+
+@media screen /* iPad Pro */
+and (min-device-width : 1024px) {
+  #aboutback {
+    min-height: 1287px;} /* 1366 = 79 */
+} 
+
+@media screen /* all else mac 13 1280 * 800 mac 15 1440 * 900 */
+and (min-device-width : 1025px) {
+  #aboutback {
+    min-height: 799px;} 
+} 
+
+#aboutfront {
+  line-height: 26px; 
+  background-image: url('hawaiis.jpg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  /*background-attachment: fixed; image will not scroll*/
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #aboutfront {
+  max-height: 489px;} /* 79 */
+} 
+
+@media screen /* galaxy s5; perfect order */
+and (min-width : 360px) /* density-independent pixels */
+and (max-width : 640px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #aboutfront {
+    max-height: 561px;} /* 79 */
+} 
+
+@media screen /* s8 s9 360 x 740 */
+and (min-width : 360px) 
+and (max-width : 740px)
+and (-webkit-device-pixel-ratio: 4)  {
+  #aboutfront {
+    max-height: 661px;} /* 79 */
+} 
+
+@media screen /* iphone 6/7/8 */
+and (min-width : 375px) 
+and (max-width : 667px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #aboutfront {
+  max-height: 588px;} /* 667-79=588 */
+} 
+
+@media screen /* x have to put above plus to avoid conflict */
+and (min-width : 375px) 
+and (max-width : 812px)
+and (-webkit-device-pixel-ratio: 3)  {
+  #aboutfront {
+    min-height: 733px;} /* 79 */
+} 
+
+@media screen /* iphone plus */
+and (min-width : 414px) 
+and (max-width : 736px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #aboutfront {
+  min-height: 657px;}
+}  
+
+@media screen /* iPad */
+and (min-device-width : 768px) {
+  #aboutfront {
+    min-height: 945px;} /* 1024 = 79 */
+} 
+
+@media screen /* iPad Pro */
+and (min-device-width : 1024px) {
+  #aboutfront {
+    min-height: 1287px;} /* 1366 = 79 */
+} 
+
+@media screen /* air 13 */
+and (min-device-width : 1280px) {
+  #aboutfront {
+    min-height: 700px;} 
+} 
+
+@media screen /* imac 15 1440 * 900 */
+and (min-device-width : 1440px) {
+  #aboutfront {
+    min-height: 700px;} /* 51 */
+} 
+
+@media screen /* imac pro 15 1680 * 1050 */
+and (min-device-width : 1680px) {
+  #aboutfront {
+    min-height: 999px;} /* 51 */
+} 
+
+@media screen /* imac 21.5 1920 * 1080 */
+and (min-device-width : 1920px) {
+  #aboutfront {
+    min-height: 1029px;} /* 51 */
+} 
+
+@media screen /* imac 27 2560 * 1440 */
+and (min-device-width : 2560px) {
+  #aboutfront {
+    min-height: 1389px;} /* 51 */
+} 
+
+#aboutme {
+  /*opacity: 0.5;*/
+  background-color: white;
+  color: black; 
+  text-align: left; 
+  margin-top: 10px; 
+  margin: auto;
+  margin-bottom: 45px; 
+  max-width: 475px;
+  height: 431px; 
+  border-radius: 5px;
+  border:1px solid #ccc;
+  border-bottom:2px solid #bbb;
+  border-top:1px solid #ddd;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#abouttext { /* about us description */
+  /*min-width: 471px; */
+  max-width:700px;
+  font-family: arial; /*Helvetica, sans-serif; */
+  color: white; 
+  text-align: justify;
+  text-justify: inter-word;
+  margin-top: 10px; /* thick white divisor */
+  margin-left: auto;
+  margin-right: auto; 
+  height: 500px; 
+  border-bottom:2px;
+  border-top:1px;
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #abouttext {
+    height: 450px; /* makes whole text scroll */
+    color: black;
+    font-weight: bold;
+  }
+}
+
+@media screen /* galaxy s5; perfect order below se */
+and (min-width : 360px) /* density-independent pixels */
+and (max-width : 640px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #abouttext {
+    height: 525px; /* 115 */
+  }
+} 
+
+@media screen /* s8 s9 360 x 740 */
+and (min-width : 360px) 
+and (max-width : 740px)
+and (-webkit-min-device-pixel-ratio: 4)  {
+  #abouttext { /* need real life testing */
+    max-height: 623px;} /* 117 */
+} 
+
+@media screen /* iphone 6/7/8 */
+and (min-width : 375px) 
+and (max-width : 667px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #abouttext {
+    height: 550px;} /* 117 */
+} 
+
+@media screen /* x have to put above plus to avoid conflict */
+and (min-width : 375px) 
+and (max-width : 812px)
+and (-webkit-device-pixel-ratio: 3)  {
+  #abouttext {   
+    height: 695px;} /* 117 */
+} 
+
+@media screen /* plus conflict x AND xmax*/
+and (min-width : 414px) 
+and (max-width : 736px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #abouttext {
+    height: 650px;} /* 86 */
+} 
+
+#allpageback { /* keeps space above contact black */
+  background: white;
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #allpageback {
+  max-height: 540px;}
+} 
+
+#allpages {
+  background: white;
+  background-image: url('mountains.jpg'); 
+  /*background-repeat: no-repeat; */
+  background-position: center;
+  /*background-attachment: fixed; image will not scroll*/
+  background-size: cover;
+  padding-bottom: 50px;
+}
+
+/*#allpages {
+    background: white;
+  background-image: url('mountains.jpg'); 
+  /*background-repeat: repeat-y; */
+  /*background-position: center; */
+  /*background-attachment: fixed; image will not scroll
+  background-size: cover;
+  padding-bottom: 50px;
+}*/
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #allpagesmain {
+  min-height: 568px;}
+} 
+
+/*@media screen /* galaxy s5 
+and (min-width : 360px) 
+and (max-width : 640px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #allpagesmain {
+  max-height: 640px;} */
+
+@media screen /* iphone 6,7,8 */
+and (min-width : 375px) 
+and (max-width : 667px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #allpagesmain {
+  min-height: 667px;}
+} 
+
+@media screen /* iphone plus */
+and (min-width : 414px) 
+and (max-width : 736px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #allpagesmain {
+  min-height: 736px;}
+} 
+
+#board {
+  background-color: white;
+  /*opacity: 0.8;*/
+  max-width: 475px;
+  border-radius: 5px;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px; 
+}
+
+#containerb {
+  background-color: black;
+  max-width: 600px;
+  display: inline-block; /*works with parent aboutback text-align center to center this */
+  padding: 10px;
+  margin-bottom: 265px; 
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #containerb {
+    background-color: transparent; 
+    margin-bottom: 0; 
+  }
+}
+
+#createsuccess {
+  text-align: center; 
+  padding-top: 15px; 
+  font-weight: bold;  
+}
+
+#editprofile {
+  text-align: center;
+  display: block;
+  margin-top: 50px; 
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 475px; 
+  max-width: 475px;
+  margin-bottom: 5px;
+}
+
+#followers {
+  border-radius: 5px;
+  /*max-width: 250px;*/
+  max-height: 500px; 
+  background-color:white;
+  display: inline-block; /*for two elements to be side by side they BOTH must have inline-block */
+}
+
+#following {
+  border-radius: 5px;
+  margin-left: 5px; /*space from left element*/
+  max-width: 250px;
+  background-color: white; 
+  display: inline-block; /* side by side; needs Parent too */
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-device-pixel-ratio: 2)  {
+  #footer {
+    position: absolute;
+    top: 540px;
+    width: 100%; 
+  }
+}
+
+@media screen /* galaxy s5; perfect order */
+and (min-width : 360px) /* density-independent pixels */
+and (max-width : 640px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #footer {
+    position: absolute;
+    top: 612px;
+    width: 100%;
+  }
+} 
+
+@media screen /* s8 s9 360 x 740 */
+and (min-width : 360px) 
+and (max-width : 740px)
+and (-webkit-device-pixel-ratio: 4)  {
+  #footer {
+    position: absolute;
+    top: 712px; /* 28 */
+    width: 100%;
+  }
+} 
+
+@media screen /* iphone 6,7,8 conflict x */
+and (min-width : 375px) 
+and (max-width : 667px)
+and (-webkit-device-pixel-ratio: 2)  { /* correct; this fix the conflict, min is for x */
+  #footer {   
+    position: absolute;
+    top: 639px;
+    width: 100%;
+  }
+}
+
+@media screen /* x have to put above plus to avoid conflict */
+and (min-width : 375px) 
+and (max-width : 812px)
+and (-webkit-device-pixel-ratio: 3)  {
+  #footer {   
+    position: absolute;
+    top: 784px; /* header 51 footer 28 = 79 */
+    width: 100%; 
+  }
+} 
+
+@media screen /* plus conflict x AND xmax*/
+and (min-width : 414px) 
+and (max-width : 736px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #footer {   
+    position: absolute;
+    top: 708px; /* header 51 footer 28 = 79 */
+    width: 100%;
+  }
+} 
+
+/*@media screen /* iPad
+and (min-width : 768px) {
+  #footer {   
+    position: absolute;
+    top: 708px; /* header 51 footer 28 = 79 
+    width: 100%;
+  }
+} */
+
+/*@media screen /* iMac 21.5 1920 * 1080
+and (min-width : 1920px) {
+  #footer {   
+    position: absolute;
+    top: 708px; /* header 51 footer 28 = 79 
+    width: 100%;
+  }
+} */
+
+/*@media screen /* iMac 27 2560 * 1440
+and (min-width : 2560px) {
+  #footer {   
+    position: absolute;
+    top: 708px; /* header 51 footer 28 = 79 
+    width: 100%;
+  }
+} */
+
+#graffblocks {
+  background-color: white;
+  /*opacity: 0.8;*/
+  max-width: 475px;
+  border-radius: 5px;
+  font-size: 12pt; 
+  text-align: left;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px; 
+  border: 1px solid lightgrey;
+}
+
+#logins {
+  /*min-width: 145px;*/ /* buttons together */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: hidden;
+}
+
+#logo {
+  background: black;
+  line-height: 170%;
+  font-family: Arial;
+  font-weight: bold;
+  font-size  :29px;
+  color      :white;
+}
+
+#mainedit {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: small;
+  color: black;
+}
+
+#mainname {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mainpic {
+  width:100%; /*keeps it whole no matter what! was front cover*/
+  height:100%; /*keeps it whole no matter what!*/
+}
+
+#merows {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-bottom-style: solid; 
+  border-color: lightgrey; 
+  padding-top: 10px;
+}
+
+#merows a {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight:normal; 
+  font-size:12pt; 
+  text-decoration:none;
+  color: black;
+}
+
+#name {   
+  font-size: 18pt;
+  font-weight: bold; 
+  margin-top: 10px; 
+  margin-left: 10px; 
+  text-align: center;
+  max-width: 475px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+  }
+
+#network {
+  min-width: 475px; 
+  max-width: 475px;
+  border-radius: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background: white; 
+}
+
+#nofriends {
+text-align: center;
+font-weight: bold;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: black;  
+}
+
+#noimgs {
+  margin-left: auto;
+  margin-right: auto;  
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: black;  
+  }
+
+#photouploader {
+  display: block; 
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+#profiledesc {
+  text-align: center;
+  max-width: 475px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+#profiledesc a {
+  text-decoration: none; 
+  color: black; 
+}
+
+#profilepic {
+  border-radius: 50%; /*rounded corners */
+  border: solid white; 
+  width: 181px;
+  height: 181px;
+  display: block; /*centered */
+  margin-left: auto; /*centered */
+  margin-right: auto;/*centered */
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+#refresh {
+  background-color: white;
+  /*opacity: 0.8;*/
+  /*min-width: 475px;*/
+  max-width: 475px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#signupback {
+  background-image: url('hawaiis.jpg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  /*background-attachment: fixed; image will not scroll*/
+  background-size: cover;
+}
+
+#signupbox {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 475px;
+}
+
+#submitimg {
+  font-weight: bold; 
+  text-align: center;
+  display: block;
+  margin-top: 10px; 
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 475px; 
+  max-width: 475px;
+  margin-bottom: 5px;
+}
+
+#th {
+  position: absolute;
+  top: 1%;
+  left: 12%;
+  /*font-family: Arial;
+  font-weight: bolder;*/
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 151px;
+  color: black;
+}
+
+#tnt {
+  position: absolute;
+  top: 1%;
+  left: 3%;
+  /*font-family: Arial;
+  font-weight: bolder;*/
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 171px;
+  color: black;
+}
+
+#tntand {
+  position: absolute;
+  top: 39%;
+  left: 5%;
+  font-family: Arial;
+  font-weight: bold;  
+  /* font-family: 'Archivo Black', sans-serif; */
+  font-size: 29px;
+  text-align: left;
+  color: black; 
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #tnt {
+    top: 7%;
+    font-size: 58px;
+    left: 2%;
+  }
+  #tntand {
+    top: 16%;
+    left: 3%;
+    font-size: 19px;
+  }
+} 
+
+@media screen /* iPad */
+and (min-device-width : 768px) {
+  #tntand {
+    top: 32%;
+  }
+} 
+
+@media screen /* iPad Pro */
+and (min-device-width : 1024px) {
+  #tntand {
+    top: 25%;
+  }
+} 
+
+/*@media screen /* all else 
+and (min-device-width : 1025px) {
+  #tnt {
+    top: 1%;
+    font-size: 171px;
+    left: 2%;
+  }
+  #tntand {
+    top: 39%;
+    font-size: 29px;
+  }
+} */
+
+@media screen /* imac 15 1440 * 900 */
+and (min-device-width : 1440px) {
+  #tntand {
+    top: 39%;
+  }
+} 
+
+@media screen /* imac pro 15 1680 * 1050 */
+and (min-device-width : 1680px) {
+  #tntand {
+    top: 30%;
+  }
+}  
+
+@media screen /* imac 21.5 1920 * 1080 */
+and (min-device-width : 1920px) {
+  #tntand {
+    top: 28%;
+  }
+} 
+
+@media screen /* imac 27 2560 * 1440 */
+and (min-device-width : 2560px) {
+  #tnt {
+    top: 1%;
+    font-size: 215px; /* 215 */
+    left: 6%; /* 6 */
+  }
+  #tntand {
+    top: 27%; /* 27 */
+    font-size: 32px;
+    left: 7%; /* 7 */
+  }
+} 
+
+#used {
+  margin-top:10px;
+  font-size: 10pt; 
+}
+
+#welcome {   /* just the black part; about us body & index above island */
+  background-color: black; 
+  font-family: Helvetica;
+  font-size  :20px;
+  color      :white;
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #welcome {   
+    max-height: 480px; /* header 51 footer 28 = 79; about us body & index above island */
+  }
+} 
+
+/*@media screen  galaxy s5 
+and (min-width : 360px) 
+and (max-width : 640px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  #welcome {
+  max-height: 561px;} */
+
+@media screen /* iphone 6,7,8 conflict x */
+and (min-width : 375px) 
+and (max-width : 667px)
+and (-webkit-device-pixel-ratio: 2)  { /* correct */
+  #welcome {   
+    min-height: 588px; /* w/o it image covers footer */
+    background-attachment: fixed;
+  }
+}
+
+@media screen /* plus conflict xmax*/
+and (min-width : 414px) 
+and (max-width : 736px)
+and (-webkit-min-device-pixel-ratio: 3)  {
+  #welcome {   
+    max-height: 657px; /* header 51 footer 28 = 79 */
+  }
+} 
+
+/*@media screen /* x, xs, 11 pro 5.8
+and (min-width : 375px) 
+and (max-width : 812px)
+and (-webkit-device-pixel-ratio: 3)  {
+  #welcome {   
+    max-height: 657px; /* header 51 footer 28 = 79 
+  }
+} */
+
+/*@media screen /* xmax, xpromax
+and (min-width : 414px) 
+and (max-width : 896px)
+and (-webkit-device-pixel-ratio: 3)  {
+  #welcome {   
+    max-height: 657px; /* header 51 footer 28 = 79 
+  }
+} */
+
+/*@media screen /* xr, 11
+and (min-width : 414px) 
+and (max-width : 896px)
+and (-webkit-min-device-pixel-ratio: 2)  {
+  #welcome {   
+    max-height: 657px; /* header 51 footer 28 = 79 
+  }
+} */
+
+@media screen /* iPad */
+and (min-device-width : 768px) {
+  #welcome {
+    min-height: 945px;} /* 1024 = 79 */
+} 
+
+@media screen /* iPad Pro */
+and (min-device-width : 1024px) {
+  #welcome {
+    min-height: 1287px;} /* 1366 = 79 */
+} 
+
+@media screen /* all else */
+and (min-device-width : 1025px) {
+  #welcome {
+    min-height: 777px;} /* 79 */
+} 
+
+.a1 {
+  font-size:45pt; 
+  font-weight:bold; 
+  text-align:center;  
+  margin-top:18px; 
+  text-shadow: 2px 2px 5px lightgrey;
+}
+
+@media screen /* iphone */
+and (min-width : 415px) 
+{
+  .a1 {
+    font-size:58pt; 
+    font-weight:bold; 
+    text-align:center;  
+    margin-top:18px; 
+    text-shadow: 2px 2px 5px lightgrey;
+  }
+}  
+
+.available {
+  color:green;
+  font-size: 10pt;
+}
+
+.avatar {
+  display: inline-block; /* doesn't work because of the accordion, needs to be inline */
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.bottomlinks {
+  color :black !important;
+  font-size: 15px;
+}
+
+.boxes {
+  text-align: center; 
+}
+
+.bronze {
+  background-color: rgb(155, 117, 22);
+}
+
+.donations.custom {
+  height: 42px; 
+  margin-top: 5px; 
+  margin-bottom: 15px; 
+  width: auto;
+}
+
+.donations {
+  border-radius: .3125em;
+  background-color: lightgrey;
+  /*background-color:#f6f6f6;*/
+  display: inline-block;
+  border: solid; 
+  font-weight: bold;
+  height: 54px;
+  padding: 0.7em .05em;
+  width: 60px; 
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align:center; 
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  top:50%; /*to center with below*/
+  left:50%; 
+  margin-left:-175px; /* NEED to center, negative half of width below */
+  margin-top:-175px;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  width: 350px;
+  height: 350px; 
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  border: solid grey;
+  /* style="color:transparent" to not show default placeholder*/
+}
+
+.graffback {
+  background-color: white;
+}
+
+.gold {
+  background-color: gold;
+}
+
+.info {
+  margin     :40px 0px;
+  text-align :center;
+}
+
+.label {
+  color: black; 
+  padding: 3px;
+  border-radius: 5px;
+  border:1px solid #ccc;
+  font-size: 12pt; 
+  font-weight: bold;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.label2 {
+  color: black !important; 
+  font-size: 12pt; 
+  font-weight: bold;
+  text-decoration: none; 
+}
+
+.level {
+  max-width: 70px;
+  margin-left:auto; 
+  margin-right:auto; 
+  margin-bottom:5px;
+}
+
+.level.partner {
+  max-width: 138px;
+}
+
+.rowcontainer { /*works with .rows */
+  display: flex; 
+  flex-direction: row;
+}
+
+.rows { /*works with .rowcontainer displays side by side*/
+  display: block;
+}
+
+.subhead {
+  font-weight:bold;
+}
+
+.shadow {
+  text-shadow: 2px 2px 5px lightgrey;
+}
+
+@media screen /* iphone se */
+and (min-width : 320px) 
+and (max-width : 568px)
+and (-webkit-min-device-pixel-ratio: 1)  {
+  .shadow.s1 {
+    text-shadow: 2px 2px 5px lightgrey;
+    font-size: 10.5pt; 
+  }
+} 
+
+.silver {
+  background-color: silver; 
+}
+
+.taken, .error {
+  color:red;
+  font-size: 10pt; 
+}
+
+.terms {
+  color:black !important; 
+  font-size:8pt; 
+  font-weight:bold; 
+  display:inline-block;
+}
+
+.username {
+  text-align :center;
+  color      :black;
+  font-family:helvetica;
+  font-size  :18pt;
+  padding    :4px;
+}
+
+.whisper {
+  font-family: Verdana, Geneva, Tahoma, sans-serif; 
+  font-size: 12pt; 
+  color: black;
+  background-color: white;
+}
+
+.left {
+  text-align:left;
+}
+      
+.right {
+  text-align:right !important;
+}
+
+.rightarrow {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.center {
+  text-align:center;
+}
+
+#left {
+  /*background: black;
+  font-family: Arial;
+  font-weight: bold;
+  font-style : bold;
+  font-size  :25px;
+  color      :white;*/
+  width: 50%;
+  float: left;
+  }
+
+#center {
+    /*background: black;
+    font-family: Arial;
+    font-weight: bold;
+    font-style : bold;
+    font-size  :25px;
+    color      :white;*/
+    width: 0%;
+    float: left;
+    }
+
+#right {
+      /*background: black;
+      font-family: Arial;
+      font-weight: bold;
+      font-style : bold;
+      font-size  :25px;
+      color      :white;*/
+      width: 50%;
+      float: right;
+      }
+
+ /**********  ACCORDION **********/
+ .page {
+  max-width: 475px;
+  margin: 0 auto 30px auto;
+  border-radius: 5px;
+}
+
+.accordion {
+  border-radius: 5px;}
+
+.accordion, .menu {
+  background-color: white;
+  color: #666;
+  margin: 0;
+  padding: 0;
+  overflow: auto;}
+
+.accordion li {
+  padding: 5px;
+  list-style-type: none;}
+
+.accordion-control {
+  background-color: #303030;
+  color: #fff;
+  display: block;
+  width: 100%;
+  padding: 0.5em 0.5em 0.5em 0.7em;
+  margin: 0;
+  border-top: 1px solid #666;}
+
+.accordion-panel {
+  display: block;} /* none to have accordion effect */
+
+.accordion-panel p {
+  margin: 20px;}
+
+.accordion-panel img {
+  display: block;
+  clear: left;} 
+  
+ /**********  SEARCH BOX **********/
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 75%;
+  /*background: #f1f1f1;*/
+  border-radius: 5px;
+
+  border-color: #ddd;
+  color: #333;
+  /*text-shadow: 0 1px 0 #f3f3f3;*/
+}
+
+/* Style the submit button */
+form.example button {
+  margin-left: 5px; 
+  margin-top: auto;
+  margin-bottom: auto;
+  float: left;
+  width: 15%;
+  padding: 10px;
+  /*background: #2196F3;*/
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+/*form.example button:hover {
+  background: #0b7dda;
+}*/
+
+/* Clear floats */
+form.example::after { /* stuff that comes after search box */
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* test code below */
