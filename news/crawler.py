@@ -53,4 +53,37 @@ class NTCrawler(Crawler):
         
         return news
 
+class CNNCrawler(Crawler):
+    base_url = "https://www.cnn.com"
+    search_addr = "/search"
+
+    def search_today(self, query):
+        return self.search({"q":query,"size":10,"sort":"newest"})
+
+    def search(self, params):
+        soup = super().search(params)
+        #print(soup.prettify())
+
+        child_divs = soup.find_all('h3', recursive=True)
+        print(child_divs)
+        news = []
+        for c_div in child_divs:
+            title = c_div.find(class_="cnn-search__result-headline")   
+            #print(title)         
+            if title is None:
+                continue
+            url = title.find('a', href=True)
+            title = url.text
+
+            defaults = {}
+            defaults["title"] = title.text
+            defaults["category"] = None
+            img = c_div.find('img')
+            if img:
+                defaults["image_url"] = img.get('src')
+            news.append({"url":self.base_url+url['href'], 
+                         "defaults":defaults})
+        
+        return news
+
 

@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from news.models import News
-from news.crawler import NTCrawler
+from news.crawler import NTCrawler, CNNCrawler
 # Create your views here.
 import json
 
@@ -39,9 +39,26 @@ class MainView(View) :
             for n in results:
                 News.objects.update_or_create(**n)
             cache["NYTimes"]["time"] = 10
-            print("search")
         else:
             cache["NYTimes"]["time"] -= 1
+
+        if "CNN" not in cache:
+            cache["CNN"] = {"time": 0}
+
+        if cache["CNN"]["time"] == 0:
+            crawler = CNNCrawler()
+            results = crawler.search_today("environment")
+            """
+            for n in results:
+                News.objects.update_or_create(**n)
+            cache["CNN"]["time"] = 10
+            """
+            for n in results:
+                print(n)
+            print("search")
+        else:
+            cache["CNN"]["time"] -= 1
+
         save_cache(cache)
         news_list = News.objects.all();
 
