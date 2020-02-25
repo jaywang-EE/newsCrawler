@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 
 URL = "https://www.nps.gov"
+HEADERS = {‘User-Agent’: ‘Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3’}
+
 
 class Crawler:
     base_url = ""
@@ -12,7 +14,7 @@ class Crawler:
         pass
 
     def search(self, params):
-        response = requests.get(self.base_url+self.search_addr, params=params)
+        response = requests.get(self.base_url+self.search_addr, params=params, headers=HEADERS)
         return BeautifulSoup(response.text, 'html.parser')
 
 class NTCrawler(Crawler):
