@@ -62,7 +62,10 @@ class CNNCrawler(Crawler):
 
     def search(self, params):
         soup = super().search(params)
-        #print(soup.prettify())
+        print(soup.prettify())
+        fw = open("test.html","w")
+        fw.write(soup.prettify())
+        fw.close() 
 
         child_divs = soup.find_all('h3', recursive=True)
         print(child_divs)
