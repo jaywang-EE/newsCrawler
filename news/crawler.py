@@ -12,17 +12,153 @@ HEADERS = ["Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like 
 
 class Crawler:
     base_url = ""
-    search_addr = "/search"
+    
     def __init__(self):
-        pass
+        self.search_addr = "/search"
 
     def search(self, params):
         response = requests.get(self.base_url+self.search_addr, params=params, headers={'User-Agent':random.choice(HEADERS)})
         return BeautifulSoup(response.text, 'html.parser')
 
+"""
+treehugger.com
+    https://www.treehugger.com/green-food/ = food
+    https://www.treehugger.com/corporate-responsibility/ = corporations
+    https://www.treehugger.com/climate-change/ = climate
+
+vice.com 
+    https://www.vice.com/en_us/topic/environment = msc 
+
+thedodo.com
+    https://www.thedodo.com/close-to-home = buddies
+
+http://plasticbagbanreport.com
+    http://plasticbagbanreport.com/category/legislation/ = politics 
+"""
+
+class PlasticbagbanreportCrawler(Crawler):
+    base_url = "http://plasticbagbanreport.com/category"
+
+    def __init__(self, search_addr, category):
+        self.search_addr = search_addr
+        self.category = category
+
+    def search(self):
+        soup = super().search({})
+        news = []
+
+        sections = soup.find(class_="topics-all").find_all('section', recursive=True)
+        
+        for a in sections:
+            defaults = {}
+            defaults["title"] = a.find("h3").text.strip('\n')
+            defaults["category"] = self.category
+
+            img = a.find("a", recursive=False)
+            defaults["image_url"] = img.find("source").get("srcset")
+            #print(img.find("source").get("srcset"))
+
+            news.append({"url":img.get("href"), 
+                         "defaults":defaults})
+
+        return news
+
+class ThedodoCrawler(Crawler):
+    base_url = "https://www.thedodo.com"
+
+    def __init__(self, search_addr, category):
+        self.search_addr = search_addr
+        self.category = category
+
+    def search(self):
+        soup = super().search({})
+        news = []
+
+        last_section = soup.find("section", class_="double-column-listing-layout u-color--white-background")
+        last_section = last_section.find("div", class_="stack__wrap")
+
+        gutters = last_section.find_all("div", class_="frow gutters", recursive=False)
+
+        for g in gutters:
+            divs = g.find_all('section', recursive=True)
+            for a in divs:
+                defaults = {}
+                a = a.find("div", class_="frow")
+
+                img, title = a.find_all("div", recursive=False)
+                print(img)
+                
+                defaults["title"] = title.find("h2").text.strip('\n').strip(' ')
+                defaults["category"] = self.category
+
+                img = img.find("a")
+                defaults["image_url"] = img.find("img").get("src")
+
+                news.append({"url":img.get("href"), 
+                             "defaults":defaults})
+
+        print(news)
+
+        return news
+
+
+class TreehuggerCrawler(Crawler):
+    base_url = "https://www.treehugger.com"
+
+    def __init__(self, search_addr, category):
+        self.search_addr = search_addr
+        self.category = category
+
+    def search(self):
+        soup = super().search({})
+        news = []
+
+        articles = soup.find(class_="c-block__cards").find_all('article', recursive=False)
+        
+        for a in articles:
+            defaults = {}
+            title = a.find(class_="c-article__headline").find('a')
+            defaults["title"] = title.text.strip('\n')
+            defaults["category"] = self.category
+            defaults["image_url"] = a.find(class_="c-article__image").find("img").get('src')
+            
+            #a.find(class_="c-article__summary")
+            #a.find(class_="c-article__byline")
+
+            news.append({"url":self.base_url+title['href'], 
+                         "defaults":defaults})
+
+        return news
+
+class ViceCrawler(Crawler):
+    base_url = "https://www.vice.com/en_us/topic"
+
+    def __init__(self, search_addr, category):
+        self.search_addr = search_addr
+        self.category = category
+
+    def search(self):
+        soup = super().search({})
+        news = []
+
+        sections = soup.find(class_="topics-all").find_all('section', recursive=True)
+        
+        for a in sections:
+            defaults = {}
+            defaults["title"] = a.find("h3").text.strip('\n')
+            defaults["category"] = self.category
+
+            img = a.find("a", recursive=False)
+            defaults["image_url"] = img.find("source").get("srcset")
+            #print(img.find("source").get("srcset"))
+
+            news.append({"url":img.get("href"), 
+                         "defaults":defaults})
+
+        return news
+
 class NTCrawler(Crawler):
     base_url = "https://www.nytimes.com"
-    search_addr = "/search"
 
     def search_today(self, query):
         date = datetime.now().strftime("%Y%m%d")
@@ -55,7 +191,6 @@ class NTCrawler(Crawler):
 
 class CNNCrawler(Crawler):
     base_url = "https://www.cnn.com"
-    search_addr = "/search"
 
     def search_today(self, query):
         return self.search({"q":query,"size":10,"sort":"newest"})

@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from news.models import News
-from news.crawler import NTCrawler, CNNCrawler
+from news.crawler import NTCrawler, CNNCrawler, TreehuggerCrawler, ViceCrawler, ThedodoCrawler, PlasticbagbanreportCrawler
 # Create your views here.
 import json
 
@@ -29,6 +29,39 @@ def save_cache(cache_dict):
 class MainView(View) :
     def get(self, request):
         cache = open_cache()
+
+        crawler = TreehuggerCrawler("/green-food", "food")
+        results = crawler.search()
+        for n in results:
+            News.objects.update_or_create(**n)
+
+        crawler = TreehuggerCrawler("/corporate-responsibility", "corporations")
+        results = crawler.search()
+        for n in results:
+            News.objects.update_or_create(**n)
+
+        crawler = TreehuggerCrawler("/climate-change", "climate")
+        results = crawler.search()
+        for n in results:
+            News.objects.update_or_create(**n)
+
+        crawler = ViceCrawler("/environment", "msc")
+        results = crawler.search()
+        for n in results:
+            News.objects.update_or_create(**n)
+        
+        crawler = ThedodoCrawler("/close-to-home", "buddies")
+        results = crawler.search()
+        
+        for n in results:
+            News.objects.update_or_create(**n)
+
+        """
+        crawler = PlasticbagbanreportCrawler("/legislation", "politics")
+        results = crawler.search()
+        for n in results:
+            News.objects.update_or_create(**n)
+
         if "NYTimes" not in cache:
             cache["NYTimes"] = {"time": 0}
 
@@ -41,23 +74,7 @@ class MainView(View) :
             cache["NYTimes"]["time"] = 10
         else:
             cache["NYTimes"]["time"] -= 1
-
-        if "CNN" not in cache:
-            cache["CNN"] = {"time": 0}
-
-        if cache["CNN"]["time"] == 0:
-            crawler = CNNCrawler()
-            results = crawler.search_today("environment")
-            """
-            for n in results:
-                News.objects.update_or_create(**n)
-            cache["CNN"]["time"] = 10
-            """
-            for n in results:
-                print(n)
-            print("search")
-        else:
-            cache["CNN"]["time"] -= 1
+        """
 
         save_cache(cache)
         news_list = News.objects.all();
