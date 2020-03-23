@@ -33,6 +33,10 @@ STATICFILES_DIRS = (
 
 # Application definition
 
+CRONJOBS = [
+    ('*/1 * * * *', 'news.cron.my_scheduled_job')
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_crontab',
     'home.apps.HomeConfig',  
     'news.apps.NewsConfig',  
 ]
