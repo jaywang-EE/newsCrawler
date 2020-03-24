@@ -3,12 +3,83 @@ import requests
 import json
 from datetime import datetime
 import random
+from news.models import News
 
 HEADERS = ["Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36",
 "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0"
 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14",
 "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0)"]
+
+
+CACHE_FILENAME = "search_hist.json"
+def open_cache():
+    try:
+        cache_file = open(CACHE_FILENAME, 'r')
+        cache_contents = cache_file.read()
+        cache_dict = json.loads(cache_contents)
+        cache_file.close()
+    except:
+        cache_dict = {}
+    return cache_dict
+
+def save_cache(cache_dict):
+    dumped_json_cache = json.dumps(cache_dict)
+    fw = open(CACHE_FILENAME,"w")
+    fw.write(dumped_json_cache)
+    fw.close() 
+
+def craw():
+    cache = open_cache()
+
+    crawler = TreehuggerCrawler("/green-food", "food")
+    results = crawler.search()
+    for n in results:
+        News.objects.update_or_create(**n)
+
+    crawler = TreehuggerCrawler("/corporate-responsibility", "corporations")
+    results = crawler.search()
+    for n in results:
+        News.objects.update_or_create(**n)
+
+    crawler = TreehuggerCrawler("/climate-change", "climate")
+    results = crawler.search()
+    for n in results:
+        News.objects.update_or_create(**n)
+
+    crawler = ViceCrawler("/environment", "msc")
+    results = crawler.search()
+    for n in results:
+        News.objects.update_or_create(**n)
+    
+    crawler = ThedodoCrawler("/close-to-home", "buddies")
+    results = crawler.search()
+    
+    for n in results:
+        News.objects.update_or_create(**n)
+
+    """
+    crawler = PlasticbagbanreportCrawler("/legislation", "politics")
+    results = crawler.search()
+    for n in results:
+        News.objects.update_or_create(**n)
+
+    if "NYTimes" not in cache:
+        cache["NYTimes"] = {"time": 0}
+
+    if cache["NYTimes"]["time"] == 0:
+        crawler = NTCrawler()
+        results = crawler.search_today("environment")
+        
+        for n in results:
+            News.objects.update_or_create(**n)
+        cache["NYTimes"]["time"] = 10
+    else:
+        cache["NYTimes"]["time"] -= 1
+    """
+
+    save_cache(cache)
+
 
 class Crawler:
     base_url = ""
@@ -19,22 +90,6 @@ class Crawler:
     def search(self, params):
         response = requests.get(self.base_url+self.search_addr, params=params, headers={'User-Agent':random.choice(HEADERS)})
         return BeautifulSoup(response.text, 'html.parser')
-
-"""
-treehugger.com
-    https://www.treehugger.com/green-food/ = food
-    https://www.treehugger.com/corporate-responsibility/ = corporations
-    https://www.treehugger.com/climate-change/ = climate
-
-vice.com 
-    https://www.vice.com/en_us/topic/environment = msc 
-
-thedodo.com
-    https://www.thedodo.com/close-to-home = buddies
-
-http://plasticbagbanreport.com
-    http://plasticbagbanreport.com/category/legislation/ = politics 
-"""
 
 class PlasticbagbanreportCrawler(Crawler):
     base_url = "http://plasticbagbanreport.com/category"

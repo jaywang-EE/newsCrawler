@@ -1,2 +1,1 @@
-def my_scheduled_job():
-    print("OK")
+from news.crawler import NTCrawler, CNNCrawler, TreehuggerCrawler, ViceCrawler, ThedodoCrawler, PlasticbagbanreportCrawler

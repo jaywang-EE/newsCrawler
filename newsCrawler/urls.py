@@ -5,9 +5,9 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', include('home.urls')),  # Keep
+    #path('', include('home.urls')),  # Keep
     path('admin/', admin.site.urls),  # Keep
-    path('news/', include('news.urls')),  # Keep
+    path('', include('news.urls')),  # Keep
 ]
 
 import os

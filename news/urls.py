@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 
 app_name='news'
 urlpatterns = [
-    path('', views.MainView.as_view(), name='all'),
+    path('viz', views.MainView.as_view(), name='all'),
+    path('', views.GetJsonView.as_view(), name='json'),
 ]
 
