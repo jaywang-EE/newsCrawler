@@ -34,7 +34,7 @@ STATICFILES_DIRS = (
 # Application definition
 
 CRONJOBS = [
-    ('*/1 * * * *', 'news.crawler.craw', '>> ./crontab_scheduled_job.log')
+    ('*/10 * * * *', 'news.crawler.craw', '>> ./crontab_scheduled_job.log')
 ]
 
 INSTALLED_APPS = [
