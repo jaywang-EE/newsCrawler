@@ -33,11 +33,11 @@ class GetJsonView(APIView):
         fromDate = request.GET.get('fromDate')
         toDate = request.GET.get('toDate')
         count = request.GET.get('count')
-        
+
         news = News.objects.filter(category=category)
         #news = News.objects.filter(date__range=["2011-01-01", "2011-01-31"])[:count]
         if count: 
-            news = news[:count]
+            news = news[:int(count)]
         news = news.values()
         news_list = list(news)
         
