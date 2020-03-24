@@ -29,11 +29,21 @@ class GetJsonView(APIView):
     renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None):
-        news = News.objects.all().values()
+        category = request.GET.get('cat')
+        fromDate = request.GET.get('fromDate')
+        toDate = request.GET.get('toDate')
+        count = request.GET.get('count')
+        
+        news = News.objects.filter(category=category)
+        #news = News.objects.filter(date__range=["2011-01-01", "2011-01-31"])[:count]
+        if count: 
+            news = news[:count]
+        news = news.values()
         news_list = list(news)
+        
         """
         return JsonResponse(users_list, safe=False)
         user_count = User.objects.filter(active=True).count()
         """
-        ctx = {'data': news_list}
+        ctx = {'data': news_list, "params": {"category":category, "fromDate":fromDate, "toDate":toDate, "count":count}}
         return Response(ctx)
