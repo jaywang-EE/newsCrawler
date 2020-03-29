@@ -4,6 +4,8 @@ from django.views import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from datetime import datetime
+
 from news.models import News
 from news.crawler import craw
 # Create your views here.
@@ -37,11 +39,27 @@ class GetJsonView(APIView):
 
         news = News.objects.all()
         if category:
-            print(category)
             news = news.filter(category=category)
+
+        if fromDate:
+            try:
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d').date()
+                news = news.filter(date__gte=fromDate)
+            except:
+                print("ERROR date: "+fromDate)
+
+        if toDate:
+            try:
+                toDate = datetime.strptime(toDate, '%Y-%m-%d').date()
+                news = news.filter(date__lte=toDate)
+            except:
+                print("ERROR date: "+toDate)
+
         #news = News.objects.filter(date__range=["2011-01-01", "2011-01-31"])[:count]
         if count: 
             news = news[:int(count)]
+
+
         news = news.values()
         news_list = list(news)
         
