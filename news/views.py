@@ -5,13 +5,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from news.models import News
+from news.crawler import craw
 # Create your views here.
 import json
 
 
 class MainView(View) :
     def get(self, request):
-
+        craw()
         news_list = News.objects.all();
 
         ctx = { 'news_list': news_list };

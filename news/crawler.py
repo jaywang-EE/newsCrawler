@@ -57,7 +57,7 @@ def craw():
     
     for n in results:
         News.objects.update_or_create(**n)
-
+    
     """
     crawler = PlasticbagbanreportCrawler("/legislation", "politics")
     results = crawler.search()
@@ -87,8 +87,10 @@ class Crawler:
     def __init__(self):
         self.search_addr = "/search"
 
-    def search(self, params):
-        response = requests.get(self.base_url+self.search_addr, params=params, headers={'User-Agent':random.choice(HEADERS)})
+    def search(self, params, url=None):
+        if url is None:
+            url = self.base_url+self.search_addr
+        response = requests.get(url, params=params, headers={'User-Agent':random.choice(HEADERS)})
         return BeautifulSoup(response.text, 'html.parser')
 
 class PlasticbagbanreportCrawler(Crawler):
@@ -116,6 +118,7 @@ class PlasticbagbanreportCrawler(Crawler):
             news.append({"url":img.get("href"), 
                          "defaults":defaults})
 
+
         return news
 
 class ThedodoCrawler(Crawler):
@@ -141,7 +144,6 @@ class ThedodoCrawler(Crawler):
                 a = a.find("div", class_="frow")
 
                 img, title = a.find_all("div", recursive=False)
-                print(img)
                 
                 defaults["title"] = title.find("h2").text.strip('\n').strip(' ')
                 defaults["category"] = self.category
@@ -149,10 +151,20 @@ class ThedodoCrawler(Crawler):
                 img = img.find("a")
                 defaults["image_url"] = img.find("img").get("src")
 
+                detail_soup = super().search({}, img.get("href"))
+
+                info_div = detail_soup.find("div", class_="meta-info__item-details")
+
+                defaults["author"] = info_div.find("a", rel="author").text.strip()
+
+                date = info_div.find("div", class_="author-meta-info__published-info").text.strip()
+                print(date)
+                date = date.split(" ")[-1]
+                print(date)
+                defaults["date"] = datetime.strptime(date, '%m/%d/%Y').date()
+
                 news.append({"url":img.get("href"), 
                              "defaults":defaults})
-
-        print(news)
 
         return news
 
@@ -171,17 +183,25 @@ class TreehuggerCrawler(Crawler):
         articles = soup.find(class_="c-block__cards").find_all('article', recursive=False)
         
         for a in articles:
-            defaults = {}
-            title = a.find(class_="c-article__headline").find('a')
-            defaults["title"] = title.text.strip('\n')
-            defaults["category"] = self.category
-            defaults["image_url"] = a.find(class_="c-article__image").find("img").get('src')
-            
-            #a.find(class_="c-article__summary")
-            #a.find(class_="c-article__byline")
+            try:
+                defaults = {}
+                title = a.find(class_="c-article__headline").find('a')
+                defaults["title"] = title.text.strip('\n')
 
-            news.append({"url":self.base_url+title['href'], 
-                         "defaults":defaults})
+                span = a.find(class_="c-article__byline").find("span")
+
+                defaults["author"] = span.find(rel="author").text.strip()
+
+                date = span.find(class_="c-article__published").text.strip()
+                defaults["date"] = datetime.strptime(date, '%B %d, %Y').date()
+                
+                defaults["category"] = self.category
+                defaults["image_url"] = a.find(class_="c-article__image").find("img").get('src')
+                
+                news.append({"url":self.base_url+title['href'], 
+                             "defaults":defaults})
+            except:
+                print("ERROR: "+self.base_url)
 
         return news
 
@@ -199,16 +219,25 @@ class ViceCrawler(Crawler):
         sections = soup.find(class_="topics-all").find_all('section', recursive=True)
         
         for a in sections:
-            defaults = {}
-            defaults["title"] = a.find("h3").text.strip('\n')
-            defaults["category"] = self.category
+            try:
+                defaults = {}
+                defaults["title"] = a.find("h3").text.strip('\n')
 
-            img = a.find("a", recursive=False)
-            defaults["image_url"] = img.find("source").get("srcset")
-            #print(img.find("source").get("srcset"))
+                defaults["author"] = a.find(class_="byline__byline").text.strip()
 
-            news.append({"url":img.get("href"), 
-                         "defaults":defaults})
+                date = a.find(class_="topics-card__timestamp").text.strip()
+                defaults["date"] = datetime.strptime(date, '%m.%d.%y').date()
+                    
+                defaults["category"] = self.category
+
+                img = a.find("a", recursive=False)
+                defaults["image_url"] = img.find("source").get("srcset")
+                #print(img.find("source").get("srcset"))
+
+                news.append({"url":img.get("href"), 
+                             "defaults":defaults})
+            except:
+                print("ERROR: "+self.base_url)
 
         return news
 

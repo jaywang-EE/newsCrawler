@@ -10,12 +10,13 @@ class News(models.Model):
             #validators=[MinLengthValidator(2, "Url must be greater than 1 character")]
     )
 
-    image_url = models.CharField(
-            max_length=200, help_text='image_url url')
+    image_url = models.CharField(max_length=200, help_text='image url')
 
-    category = models.CharField(
-            max_length=100, help_text='image_url url')
+    category = models.CharField(max_length=100, help_text='category')
 
+    author = models.CharField(max_length=40, null=True, help_text='author')
+
+    date = models.DateField()
     
 
     def __str__(self):
