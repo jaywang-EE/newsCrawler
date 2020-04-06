@@ -58,26 +58,6 @@ def craw():
     for n in results:
         News.objects.update_or_create(**n)
     
-    """
-    crawler = PlasticbagbanreportCrawler("/legislation", "politics")
-    results = crawler.search()
-    for n in results:
-        News.objects.update_or_create(**n)
-
-    if "NYTimes" not in cache:
-        cache["NYTimes"] = {"time": 0}
-
-    if cache["NYTimes"]["time"] == 0:
-        crawler = NTCrawler()
-        results = crawler.search_today("environment")
-        
-        for n in results:
-            News.objects.update_or_create(**n)
-        cache["NYTimes"]["time"] = 10
-    else:
-        cache["NYTimes"]["time"] -= 1
-    """
-
     save_cache(cache)
 
 

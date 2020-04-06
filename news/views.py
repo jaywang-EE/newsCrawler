@@ -8,6 +8,7 @@ from datetime import datetime
 
 from news.models import News
 from news.crawler import craw
+from news.crawlers.crawler import craw_covid
 # Create your views here.
 import json
 
@@ -67,5 +68,6 @@ class GetJsonView(APIView):
         return JsonResponse(users_list, safe=False)
         user_count = User.objects.filter(active=True).count()
         """
-        ctx = {'data': news_list, "params": {"category":category, "fromDate":fromDate, "toDate":toDate, "count":count}, "count":len(news_list)}
+        ctx = {'data': news_list, "covid": craw_covid(), 
+               "params": {"category":category, "fromDate":fromDate, "toDate":toDate, "count":count}, "count":len(news_list)}
         return Response(ctx)
