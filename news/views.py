@@ -38,7 +38,7 @@ class GetJsonView(APIView):
         toDate = request.GET.get('toDate')
         count = request.GET.get('count')
 
-        news = News.objects.all()
+        news = News.objects.all().order_by('-date')
         if category:
             news = news.filter(category=category)
 
