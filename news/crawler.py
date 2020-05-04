@@ -32,27 +32,27 @@ def save_cache(cache_dict):
 def craw():
     cache = open_cache()
 
-    crawler = TreehuggerCrawler("/green-food", "food")
+    crawler = TreehuggerCrawler("/green-food", "food", "treehugger")
     results = crawler.search()
     for n in results:
         News.objects.update_or_create(**n)
 
-    crawler = TreehuggerCrawler("/corporate-responsibility", "corporations")
+    crawler = TreehuggerCrawler("/corporate-responsibility", "corporations", "treehugger")
     results = crawler.search()
     for n in results:
         News.objects.update_or_create(**n)
 
-    crawler = TreehuggerCrawler("/climate-change", "climate")
+    crawler = TreehuggerCrawler("/climate-change", "climate", "treehugger")
     results = crawler.search()
     for n in results:
         News.objects.update_or_create(**n)
 
-    crawler = ViceCrawler("/environment", "msc")
+    crawler = ViceCrawler("/environment", "msc", "vice")
     results = crawler.search()
     for n in results:
         News.objects.update_or_create(**n)
     
-    crawler = ThedodoCrawler("/close-to-home", "buddies")
+    crawler = ThedodoCrawler("/close-to-home", "buddies", "thedodo")
     results = crawler.search()
     
     for n in results:
@@ -76,9 +76,10 @@ class Crawler:
 class PlasticbagbanreportCrawler(Crawler):
     base_url = "http://plasticbagbanreport.com/category"
 
-    def __init__(self, search_addr, category):
+    def __init__(self, search_addr, category, source):
         self.search_addr = search_addr
         self.category = category
+        self.source = source
 
     def search(self):
         soup = super().search({})
@@ -90,6 +91,7 @@ class PlasticbagbanreportCrawler(Crawler):
             defaults = {}
             defaults["title"] = a.find("h3").text.strip('\n')
             defaults["category"] = self.category
+            defaults["source"] = self.source
 
             img = a.find("a", recursive=False)
             defaults["image_url"] = img.find("source").get("srcset")
@@ -104,9 +106,10 @@ class PlasticbagbanreportCrawler(Crawler):
 class ThedodoCrawler(Crawler):
     base_url = "https://www.thedodo.com"
 
-    def __init__(self, search_addr, category):
+    def __init__(self, search_addr, category, source):
         self.search_addr = search_addr
         self.category = category
+        self.source = source
 
     def search(self):
         soup = super().search({})
@@ -127,6 +130,7 @@ class ThedodoCrawler(Crawler):
                 
                 defaults["title"] = title.find("h2").text.strip('\n').strip(' ')
                 defaults["category"] = self.category
+                defaults["source"] = self.source
 
                 img = img.find("a")
                 defaults["image_url"] = img.find("img").get("src")
@@ -138,9 +142,9 @@ class ThedodoCrawler(Crawler):
                 defaults["author"] = info_div.find("a", rel="author").text.strip()
 
                 date = info_div.find("div", class_="author-meta-info__published-info").text.strip()
-                print(date)
+
                 date = date.split(" ")[-1]
-                print(date)
+
                 defaults["date"] = datetime.strptime(date, '%m/%d/%Y').date()
 
                 news.append({"url":img.get("href"), 
@@ -152,9 +156,10 @@ class ThedodoCrawler(Crawler):
 class TreehuggerCrawler(Crawler):
     base_url = "https://www.treehugger.com"
 
-    def __init__(self, search_addr, category):
+    def __init__(self, search_addr, category, source):
         self.search_addr = search_addr
         self.category = category
+        self.source = source
 
     def search(self):
         soup = super().search({})
@@ -176,6 +181,7 @@ class TreehuggerCrawler(Crawler):
                 defaults["date"] = datetime.strptime(date, '%B %d, %Y').date()
                 
                 defaults["category"] = self.category
+                defaults["source"] = self.source
                 defaults["image_url"] = a.find(class_="c-article__image").find("img").get('src')
                 
                 news.append({"url":self.base_url+title['href'], 
@@ -188,9 +194,10 @@ class TreehuggerCrawler(Crawler):
 class ViceCrawler(Crawler):
     base_url = "https://www.vice.com/en_us/topic"
 
-    def __init__(self, search_addr, category):
+    def __init__(self, search_addr, category, source):
         self.search_addr = search_addr
         self.category = category
+        self.source = source
 
     def search(self):
         soup = super().search({})
@@ -209,6 +216,7 @@ class ViceCrawler(Crawler):
                 defaults["date"] = datetime.strptime(date, '%m.%d.%y').date()
                     
                 defaults["category"] = self.category
+                defaults["source"] = self.source
 
                 img = a.find("a", recursive=False)
                 defaults["image_url"] = img.find("source").get("srcset")

@@ -15,6 +15,8 @@ class News(models.Model):
     category = models.CharField(max_length=100, help_text='category')
 
     author = models.CharField(max_length=40, null=True, help_text='author')
+    
+    source = models.CharField(max_length=40, null=True, help_text='source')
 
     date = models.DateField()
     
