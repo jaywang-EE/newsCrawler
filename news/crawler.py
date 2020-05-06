@@ -157,11 +157,6 @@ class ThedodoCrawler(Crawler):
 class TreehuggerCrawler(Crawler):
     base_url = "https://www.treehugger.com"
 
-    def __init__(self, search_addr, category, source):
-        self.search_addr = search_addr
-        self.category = category
-        self.source = source
-
     def search(self):
         soup = super().search({})
         news = []
@@ -195,11 +190,6 @@ class TreehuggerCrawler(Crawler):
 
 class ViceCrawler(Crawler):
     base_url = "https://www.vice.com/en_us/topic"
-
-    def __init__(self, search_addr, category, source):
-        self.search_addr = search_addr
-        self.category = category
-        self.source = source
 
     def search(self):
         soup = super().search({})
