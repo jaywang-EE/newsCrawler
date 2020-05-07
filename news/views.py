@@ -35,8 +35,10 @@ class GetJsonView(APIView):
     def get(self, request, format=None):
         category = request.GET.get('cat')
         fromDate = request.GET.get('fromDate')
-        toDate = request.GET.get('toDate')
-        count = request.GET.get('count')
+        toDate   = request.GET.get('toDate')
+        count    = request.GET.get('count')
+        offset   = request.GET.get('offset')
+
 
         news = News.objects.all().order_by('-date')
         if category:
@@ -57,9 +59,10 @@ class GetJsonView(APIView):
                 print("ERROR date: "+toDate)
 
         #news = News.objects.filter(date__range=["2011-01-01", "2011-01-31"])[:count]
+        if offset:
+            news = news[int(offset):]
         if count: 
             news = news[:int(count)]
-
 
         news = news.values()
         news_list = list(news)
@@ -69,5 +72,5 @@ class GetJsonView(APIView):
         user_count = User.objects.filter(active=True).count()
         """
         ctx = {'data': news_list, 
-               "params": {"category":category, "fromDate":fromDate, "toDate":toDate, "count":count}, "count":len(news_list)}
+               "params": {"category":category, "fromDate":fromDate, "toDate":toDate, "offset":offset, "count":count}, "count":len(news_list)}
         return Response(ctx)
