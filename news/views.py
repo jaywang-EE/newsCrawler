@@ -34,15 +34,18 @@ class GetJsonView(APIView):
 
     def get(self, request, format=None):
         category = request.GET.get('cat')
+        category_negative = request.GET.get('catneg')
         fromDate = request.GET.get('fromDate')
         toDate   = request.GET.get('toDate')
         count    = request.GET.get('count')
         offset   = request.GET.get('offset')
 
-
         news = News.objects.all().order_by('-date')
         if category:
             news = news.filter(category=category)
+
+        if category_negative:
+            news = news.exclude(category=category_negative)
 
         if fromDate:
             try:
